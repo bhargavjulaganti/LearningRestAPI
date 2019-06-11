@@ -1,0 +1,11 @@
+namespace QL.Models
+{
+    public class MyPersonalInfoModel
+    {
+        public string Name { get; set; }
+
+        public int Age { get; set; }
+
+    }
+
+}
