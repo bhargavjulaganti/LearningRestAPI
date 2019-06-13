@@ -5,9 +5,6 @@ namespace QL.PersonalInfo.Interfaces
 {
     public interface IPersonalInfoRepository
     {
-         MyPersonalInfoModel GetPersonalInfo(string name);
-
-        //  string  GetPersonalInfo(string name); // working
-    }
-    
+        Task<MyPersonalInfoModel> GetPersonalInfo(string name);
+    }    
 }

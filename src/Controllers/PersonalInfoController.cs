@@ -10,20 +10,21 @@ namespace mycode.Controllers
 {
     [Route("api/[controller]")]
 
-    public class PersonalInfoController : ControllerBase
+    public class TestCaseNameController : ControllerBase
     {
 
         private readonly IPersonalInfoRepository personalInfoRepository;
 
-        public PersonalInfoController(IPersonalInfoRepository personalInfoRepository)
+        public TestCaseNameController(IPersonalInfoRepository personalInfoRepository)
         {
             this.personalInfoRepository = personalInfoRepository;
         }
 
         [HttpGet("{id}")]
-        public   ActionResult<MyPersonalInfoModel> Get(string id)
+        public  async  Task<ActionResult<MyPersonalInfoModel>> Get(string id)
         {
-            return  personalInfoRepository.GetPersonalInfo(id);
+            //return  personalInfoRepository.GetPersonalInfo(id);
+            return await personalInfoRepository.GetPersonalInfo(id);
         }
 
     }
