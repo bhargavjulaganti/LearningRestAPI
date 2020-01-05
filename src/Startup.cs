@@ -30,7 +30,7 @@ namespace mycode
         {
           
 
-            services.AddTransient<IPersonalInfoRepository,PersonalInfoRepository>();
+            services.AddTransient<IWorkoutHistoryRepository,WorkoutHistoryRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
