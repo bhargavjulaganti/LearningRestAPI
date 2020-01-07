@@ -19,6 +19,8 @@ namespace QL.Repository
         private readonly IConfiguration configuration;
         private HttpClient client = new HttpClient();
 
+        private readonly string uri = "https://q6rrg5mw2k.execute-api.us-east-2.amazonaws.com/default";
+
         // private readonly IHttpClientFactory httpClientFactory ;
 
 
@@ -29,10 +31,9 @@ namespace QL.Repository
 
         public async Task<List<WorkoutHistoryModel>> GetWorkoutHistory(string WorkoutType)
         {
+            var url = uri + "/getdata?workOutType=" + WorkoutType;
 
-            var uri = "https://q6rrg5mw2k.execute-api.us-east-2.amazonaws.com/default/getdata?workOutType=" + WorkoutType;
-
-            HttpResponseMessage response = await client.GetAsync(uri);
+            HttpResponseMessage response = await client.GetAsync(url);
 
             string testdata = await response.Content.ReadAsStringAsync();
 
@@ -42,21 +43,49 @@ namespace QL.Repository
 
             var myresponse = new List<WorkoutHistoryModel>();
 
-            foreach(var p in data.Items)
+            foreach (var p in data.Items)
             {
                 myresponse.Add(new WorkoutHistoryModel()
-                    {
-                        CreatedDate  = p.CreatedDate,
-                        Set1 = p.Set1,
-                        Set2 = p.Set2,
-                        Set3 = p.Set3,
-                        Set4 = p.Set4
-                    }
-                ); 
+                {
+                    CreatedDate = p.CreatedDate,
+                    Set1 = p.Set1,
+                    Set2 = p.Set2,
+                    Set3 = p.Set3,
+                    Set4 = p.Set4
+                }
+                );
             }
 
             return myresponse;
         }
 
+
+        public async Task PostWorkOut(WorkoutHistoryModel workoutModel)
+        {
+
+            var reqBody = new Dictionary<string, string>()
+                         {
+                            {"TableName",workoutModel.TableName},
+                            {"CreatedDate", workoutModel.CreatedDate},
+                            {"Set1",workoutModel.Set1},
+                            {"Set2",workoutModel.Set2},
+                            {"Set3",workoutModel.Set3},
+                            {"Set4",workoutModel.Set4}
+                          };
+
+            using(var client = new HttpClient())
+            {
+                var response = await client.PostAsJsonAsync(uri + "/PostDataIntoDynamo",reqBody);
+                Console.WriteLine(response.StatusCode);
+            }
+
+             
+
+        }
+
+
     }
+
+
+
 }
