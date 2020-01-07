@@ -7,5 +7,6 @@ namespace QL.PersonalInfo.Interfaces
     public interface IWorkoutHistoryRepository
     {
         Task<List<WorkoutHistoryModel>> GetWorkoutHistory(string name);
+        Task PostWorkOut(WorkoutHistoryModel workoutModel);
     }    
 }
